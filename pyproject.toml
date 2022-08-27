@@ -14,7 +14,54 @@ black = "^22.6.0"
 isort = "^5.10.1"
 mypy = "^0.971"
 flake8 = "^5.0.4"
+pylint = "^2.15.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+line_length = 79
+lines_after_imports = 2
+
+[[tool.mypy.overrides]]
+module = "types.course"
+implicit_reexport = true
+
+[tool.pylint.BASIC]
+good-names=[
+    "e",  # (exception) as e
+    "f",  # (file) as f
+    "k",  # for k, v in
+    "v",  # for k, v in
+    "dt",  # datetime
+]
+
+[tool.pylint.MASTER]
+disable=[
+	"C0103",  # invalid-name
+	"C0114",  # missing-module-docstring
+	"C0115",  # missing-class-docstring
+	"C0116",  # missing-function-docstring
+	"C0209",  # consider-using-f-string
+	"C0415",  # import-outside-toplevel
+	"W0511",  # fixme
+	"W0703",  # broad-except
+	"W0707",  # raise-missing-from
+	"R0801",  # duplicate-code
+	"R0901",  # too-many-ancestors
+	"R0902",  # too-many-instance-attributes
+	"R0903",  # too-few-public-methods
+	"R0913",  # too-many-arguments
+	"E1136",  # unsubscriptable-object (false positive with python 3.9)
+]
+
+[tool.pylint.FORMAT]
+max-line-length=79
+
+[tool.pylint.DESIGN]
+max-parents=13
+
+[tool.pylint.TYPECHECK]
+generated-members="REQUEST,acl_users,aq_parent,\"[a-zA-Z]+_set{1,2}\",save,delete"

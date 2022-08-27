@@ -1,4 +1,4 @@
-default_stages: [commit]
+default_stages: [ commit ]
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -12,7 +12,7 @@ repos:
     rev: v2.34.0
     hooks:
       - id: pyupgrade
-        args: [--py310-plus]
+        args: [ --py310-plus ]
 
   - repo: https://github.com/psf/black
     rev: 22.3.0
@@ -28,17 +28,30 @@ repos:
     rev: 'tags/v0.971'
     hooks:
       - id: mypy
-        args: ["--strict", "--namespace-packages", "--ignore-missing-imports", "--show-error-codes"]
+        args: [ "--strict", "--namespace-packages", "--ignore-missing-imports", "--show-error-codes" ]
 
   - repo: https://github.com/PyCQA/flake8
     rev: 4.0.1
     hooks:
       - id: flake8
-        args: ["--config=setup.cfg"]
-        additional_dependencies: [flake8-isort]
+        args: [ "--config=setup.cfg" ]
+        additional_dependencies: [ flake8-isort ]
+
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [ python ]
+        args:
+          [
+            "-rn", # Only display messages
+            "-sn", # Don't display the score
+          ]
 
 # sets up .pre-commit-ci.yaml to ensure pre-commit dependencies stay up to date
 ci:
   autoupdate_schedule: weekly
-  skip: []
+  skip: [ ]
   submodules: false

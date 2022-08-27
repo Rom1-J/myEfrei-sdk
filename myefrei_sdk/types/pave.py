@@ -1,79 +1,3 @@
-"""
-https://www.myefrei.fr/api/extranet/student/queries/paves/pave-associations
-
-return:
-    {
-        "rows": [
-            {
-                "id": "",
-                "name": ""
-            },
-            ...
-        ],
-        "totalRowCount": 0
-    }
-
-
-
-https://www.myefrei.fr/api/extranet/student/queries/paves/pave-roles
-
-return:
-    {
-        "rows": [
-            {
-                "id": "",
-                "name": ""
-            },
-            ...
-        ],
-        "totalRowCount": 0
-    }
-
-
-
-https://www.myefrei.fr/api/extranet/student/queries/paves/pave-invested-times
-
-return:
-    {
-        "rows": [
-            {
-                "id": "",
-                "time": ""
-            },
-            ...
-        ],
-        "totalRowCount": 0
-    }
-
-
-
-https://www.myefrei.fr/api/extranet/student/queries/paves/pave-invested-times
-
-return:
-    {
-        "rows": [
-            {
-                "id": "",
-                "associationId": "",
-                "associationName": "",
-                "roleId": "",
-                "roleName": "",
-                "otherRole": "",
-                "investedTime": "",
-                "mission": "",
-                "acquiredSkills": "",
-                "motivation": "",
-                "mark": "",
-                "publicComment": "",
-                "pavePeriodId": ""
-            },
-            ...
-        ],
-        "totalRowCount": 0
-    }
-
-
-"""
 import typing
 
 
@@ -119,13 +43,12 @@ class Interest(typing.TypedDict):
 
 class Pave(typing.TypedDict):
     id: int
-    association_id: int
-    association_name: str
+    association: Association
 
-    role_id: int
-    role_name: str
+    role: Role
     other_role: str | None
-    invested_time: str
+
+    invested: Interest
 
     mission: str
     acquired_skills: str
@@ -133,4 +56,3 @@ class Pave(typing.TypedDict):
 
     mark: int
     public_comment: str | None
-    pave_period_id: int

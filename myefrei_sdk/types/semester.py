@@ -1,29 +1,23 @@
-"""
-https://www.myefrei.fr/api/extranet/student/queries/student-semesters
-
-
-return:
-    {
-        "rows": [
-            {
-                "custSemester": "",
-                "custYearId": "",
-                "soffAcadPerId": "",
-                "stdNumber": "",
-                "custCurrentSemester": ""
-            },
-            ...
-        ],
-        "totalRowCount": 0
-    }
-
-"""
 import typing
 
 
+if typing.TYPE_CHECKING:
+    from .course import Course, ScheduledCourse
+    from .exam_paper import ExamPaper
+    from .grade import Grade
+    from .student import Document
+
+
 class Semester(typing.TypedDict):
-    cust_current_semester: bool
-    cust_semester: str
-    cust_year_id: int
-    soff_academic_per_id: str
-    student_number: int
+    is_current: bool
+
+    name: str
+    year: int
+    year_gap: str
+
+    courses: list["Course"]
+    scheduled_courses: list["ScheduledCourse"]
+
+    grades: list["Grade"]
+    documents: list["Document"]
+    exam_papers: list["ExamPaper"]

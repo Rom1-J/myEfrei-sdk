@@ -1,24 +1,18 @@
-"""
-https://www.myefrei.fr/api/rest/common/slides
-
-return:
-    [
-        {
-            "title": "",
-            "author": "",
-            "updateDate": "",
-            "token": ""
-        },
-        ...
-    ]
-
-"""
 import datetime
 import typing
 
 
+SLIDE_TYPE = typing.Literal["html", "url"]
+
+
 class Slide(typing.TypedDict):
+    token: str
+
     author: str
     title: str
-    token: str
-    update_date: datetime.datetime
+    text: str
+    type: SLIDE_TYPE
+
+    url: str | None
+
+    updated_at: datetime.datetime

@@ -1,57 +1,22 @@
-"""
-https://www.myefrei.fr/api/extranet/student/queries/student-absences
-
-args:
-    yearId: yyyy
-
-return:
-    {
-        "rows": [
-            {
-                "actCodDescription": "",
-                "custSemester": "",
-                "soffAcadPerId": "",
-                "soffOfferingDesc": "",
-                "soffServiceOffId": "",
-                "stdNumber": "",
-                "stdAbsCodeAbsence": "",
-                "stdAbsClassDate": "",
-                "stdAbsDescription": "",
-                "stdAbsExcused": "",
-                "timeCrAbsHours": "",
-                "timeCrBlockId": "",
-                "timeCrTimeFrom": ""
-            },
-            ...
-        ],
-        "totalRowCount": 0
-    }
-
-"""
 import datetime
 import typing
 
 
-ExcusedAbsence = typing.Literal["Excusée", "Non excusée"]
-AbsenceCode = typing.Literal["ABS", "ABS-EXCUSE"]
+if typing.TYPE_CHECKING:
+    from .course import ScheduledCourse
+    from .semester import Semester
 
 
 class Absence(typing.TypedDict):
-    act_cod_description: str
-    soff_offering_desc: str
+    is_excused: bool
 
-    cust_semester: str
-    soff_academic_per_id: str
+    course: typing.Optional["ScheduledCourse"]
+    course_name: str
+    course_description: str
 
-    soff_service_offering_id: str
+    date: datetime.datetime
+    hours: float
+    start: datetime.datetime
+    end: datetime.datetime
 
-    student_absence_code_absence: AbsenceCode
-    student_absence_class_date: datetime.datetime
-    student_absence_description: str
-    student_absence_excused: ExcusedAbsence
-
-    time_cr_abs_hours: float
-    time_cr_block_id: str
-    time_cr_time_from: str
-
-    student_number: int
+    semester: "Semester"
