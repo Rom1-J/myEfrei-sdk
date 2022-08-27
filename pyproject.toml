@@ -1,13 +1,19 @@
 [tool.poetry]
 name = "myefrei-sdk"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "Python SDK for https://myefrei.fr"
+authors = ["Romain J. <romain@gnous.eu>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 
 [tool.poetry.dev-dependencies]
+pre-commit = "^2.20.0"
+pyupgrade = "^2.37.3"
+black = "^22.6.0"
+isort = "^5.10.1"
+mypy = "^0.971"
+flake8 = "^5.0.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
