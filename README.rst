@@ -60,5 +60,5 @@ Integrations
 .. |image0| image:: https://img.shields.io/badge/python-3.10-%23007ec6
 .. |image1| image:: https://img.shields.io/github/issues/Rom1-J/myefrei-sdk
 .. |image2| image:: https://img.shields.io/badge/code%20style-black-000000.svg
-.. |image3| image:: https://wakatime.com/badge/github/Rom1-J/myefrei-sdk.svg
-    :target: https://wakatime.com/badge/github/Rom1-J/myefrei-sdk
+.. |image3| image:: https://wakatime.com/badge/user/7b6efcd2-8f0b-4574-8af4-2d69796f5fb0/project/1efee433-fb79-4ba7-aa13-85ee06b4c453.svg
+    :target: https://wakatime.com/badge/user/7b6efcd2-8f0b-4574-8af4-2d69796f5fb0/project/1efee433-fb79-4ba7-aa13-85ee06b4c453
