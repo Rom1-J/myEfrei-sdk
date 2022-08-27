@@ -1,3 +1,36 @@
+"""
+https://www.myefrei.fr/api/extranet/student/queries/student-moodle-courses
+
+args:
+    semester: (ex. S6)
+    year: yyyy-yyyy
+
+return:
+    {
+        "rows": [
+            {
+                "level1Name": "",
+                "level2Name": "",
+                "level3Name": "",
+                "custAggregateName": "",
+                "custSemester": "",
+                "enrServiceId": "",
+                "enrServiceoffId": "",
+                "coursesSpace": "",
+                "soffAcadPerId": "",
+                "soffDeliveryMode": "",
+                "soffOfferingDesc": "",
+                "soffServiceGrpId": "",
+                "soffServiceoffPk": "",
+                "soffliParentServoffFk": "",
+                "stdNumber": ""
+            },
+            ...
+        ],
+        "totalRowCount": 0
+    }
+
+"""
 import typing
 
 

@@ -1,3 +1,33 @@
+"""
+https://www.myefrei.fr/api/extranet/student/queries/student-absences
+
+args:
+    yearId: yyyy
+
+return:
+    {
+        "rows": [
+            {
+                "actCodDescription": "",
+                "custSemester": "",
+                "soffAcadPerId": "",
+                "soffOfferingDesc": "",
+                "soffServiceOffId": "",
+                "stdNumber": "",
+                "stdAbsCodeAbsence": "",
+                "stdAbsClassDate": "",
+                "stdAbsDescription": "",
+                "stdAbsExcused": "",
+                "timeCrAbsHours": "",
+                "timeCrBlockId": "",
+                "timeCrTimeFrom": ""
+            },
+            ...
+        ],
+        "totalRowCount": 0
+    }
+
+"""
 import datetime
 import typing
 

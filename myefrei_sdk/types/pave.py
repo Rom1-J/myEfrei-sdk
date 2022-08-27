@@ -1,3 +1,79 @@
+"""
+https://www.myefrei.fr/api/extranet/student/queries/paves/pave-associations
+
+return:
+    {
+        "rows": [
+            {
+                "id": "",
+                "name": ""
+            },
+            ...
+        ],
+        "totalRowCount": 0
+    }
+
+
+
+https://www.myefrei.fr/api/extranet/student/queries/paves/pave-roles
+
+return:
+    {
+        "rows": [
+            {
+                "id": "",
+                "name": ""
+            },
+            ...
+        ],
+        "totalRowCount": 0
+    }
+
+
+
+https://www.myefrei.fr/api/extranet/student/queries/paves/pave-invested-times
+
+return:
+    {
+        "rows": [
+            {
+                "id": "",
+                "time": ""
+            },
+            ...
+        ],
+        "totalRowCount": 0
+    }
+
+
+
+https://www.myefrei.fr/api/extranet/student/queries/paves/pave-invested-times
+
+return:
+    {
+        "rows": [
+            {
+                "id": "",
+                "associationId": "",
+                "associationName": "",
+                "roleId": "",
+                "roleName": "",
+                "otherRole": "",
+                "investedTime": "",
+                "mission": "",
+                "acquiredSkills": "",
+                "motivation": "",
+                "mark": "",
+                "publicComment": "",
+                "pavePeriodId": ""
+            },
+            ...
+        ],
+        "totalRowCount": 0
+    }
+
+
+"""
 import typing
 
 

@@ -1,3 +1,18 @@
+"""
+https://www.myefrei.fr/api/rest/common/slides
+
+return:
+    [
+        {
+            "title": "",
+            "author": "",
+            "updateDate": "",
+            "token": ""
+        },
+        ...
+    ]
+
+"""
 import datetime
 import typing
 

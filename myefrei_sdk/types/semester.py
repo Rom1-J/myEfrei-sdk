@@ -1,3 +1,23 @@
+"""
+https://www.myefrei.fr/api/extranet/student/queries/student-semesters
+
+
+return:
+    {
+        "rows": [
+            {
+                "custSemester": "",
+                "custYearId": "",
+                "soffAcadPerId": "",
+                "stdNumber": "",
+                "custCurrentSemester": ""
+            },
+            ...
+        ],
+        "totalRowCount": 0
+    }
+
+"""
 import typing
 
 

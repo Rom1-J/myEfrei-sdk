@@ -1,3 +1,22 @@
+"""
+https://www.myefrei.fr/api/rest/student/notifications
+
+return:
+    [
+        {
+            "type": "",
+            "number": "",
+            "title": "",
+            "description": "",
+            "shortDescription": "",
+            "btnDescription": "",
+            "url": "",
+            "priority": ""
+        },
+        ...
+    ]
+
+"""
 import typing
 
 
