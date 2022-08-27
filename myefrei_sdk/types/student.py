@@ -1,6 +1,4 @@
-import datetime
 import typing
-import uuid
 
 
 AUTHORITY_TYPE = typing.Literal[
@@ -22,7 +20,7 @@ class UserAuthority(typing.TypedDict):
     authority: AUTHORITY_TYPE
 
 
-class Student(typing.TypedDict):
+class User(typing.TypedDict):
     sub: str
     username: str
     firstname: str
@@ -36,16 +34,16 @@ class Student(typing.TypedDict):
 
 
 class Document(typing.TypedDict):
-    id: int
-    file_guid: uuid.UUID
-    page_guid: uuid.UUID
-
-    type: DOCUMENT_TYPE
-    type_name: str
-    mimetype: str
-    status: str
-    title: str
-    size: int
-
-    page_last_updated: datetime.datetime
-    page_revision_number: int
+    docType: DOCUMENT_TYPE
+    docFreeText: str
+    docMimeType: str
+    docSequenceNo: str
+    docStatus: str
+    docTitle: str
+    docBlobFileGuid: str
+    docBlobFileSize: str
+    docPageGuid: str
+    docPageLastUpdate: str
+    docPageRevNo: str
+    docTypeName: str
+    stdNumber: str
