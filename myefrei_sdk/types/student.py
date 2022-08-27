@@ -23,20 +23,16 @@ class UserAuthority(typing.TypedDict):
 
 
 class Student(typing.TypedDict):
-    sub: int
+    sub: str
     username: str
-
     firstname: str
-    lastname: str
+    name: str
     fullname: str
-
-    authorities: list[UserAuthority]
-
     email: str
     email_verified: bool
-
-    home: str
     role: USER_ROLE
+    home: str
+    authorities: list[UserAuthority]
 
 
 class Document(typing.TypedDict):
