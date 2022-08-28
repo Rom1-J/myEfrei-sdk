@@ -1,17 +1,25 @@
 import datetime
+import logging
 import typing
 import uuid
 
 
 if typing.TYPE_CHECKING:
+    from .client import Client
     from .types.student import DOCUMENT_TYPE, USER_ROLE
     from .types.student import Document as DocumentPayload
     from .types.student import User as StudentPayload
     from .types.student import UserAuthority
 
 
+_log = logging.getLogger(__name__)
+
+
 class User:
-    def __init__(self, data: "StudentPayload") -> None:
+    def __init__(self, client: "Client", data: "StudentPayload") -> None:
+        # pylint: disable=unused-private-member
+        self.__client: "Client" = client
+
         self.sub: int = int(data["sub"])
         self.username: str = data["username"]
 
@@ -53,20 +61,23 @@ class User:
 
 
 class Document:
-    def __init__(self, data: "DocumentPayload") -> None:
+    def __init__(self, client: "Client", data: "DocumentPayload") -> None:
+        # pylint: disable=unused-private-member
+        self.__client: "Client" = client
+
         self.id: int = int(data["docSequenceNo"])
         self.file_guid: uuid.UUID = uuid.UUID(data["docBlobFileGuid"])
         self.page_guid: uuid.UUID = uuid.UUID(data["docPageGuid"])
 
-        self.type: DOCUMENT_TYPE = data["docType"]
+        self.type: "DOCUMENT_TYPE" = data["docType"]
         self.type_name: str = data["docTypeName"]
         self.mimetype: str = data["docMimeType"]
         self.status: str = data["docStatus"]
         self.title: str = data["docTitle"]
         self.size: int = int(data["docBlobFileSize"])
 
-        self.page_last_updated: datetime.datetime = datetime.datetime.fromisoformat(
-            data["docPageLastUpdate"]
+        self.page_last_updated: datetime.datetime = (
+            datetime.datetime.fromisoformat(data["docPageLastUpdate"])
         )
         self.page_revision_number: int = int(data["docPageRevNo"])
 
