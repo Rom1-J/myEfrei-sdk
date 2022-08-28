@@ -2,8 +2,8 @@ import typing
 
 
 class Room(typing.TypedDict):
-    time: str
-
-    name: str
-    type: str
-    site: str
+    id: str
+    st: str
+    rn: str
+    rt: str
+    sn: str

@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 import aiohttp
@@ -7,6 +8,7 @@ from .absence import Absence
 from .error import ImproperApiResultException
 from .notification import Notification
 from .pave import Pave
+from .room import Room
 from .semester import Semester
 from .slide import Slide
 from .student import Document, User
@@ -323,5 +325,46 @@ class Client:
                     for raw_data in data.get("rows", [])
                 ]
                 return self.semesters or []
+
+            raise ImproperApiResultException()
+
+    # =========================================================================
+
+    async def fetch_rooms(self, date: datetime.datetime) -> list[Room]:
+        """Retrieves an :term:`iterator` containing available rooms.
+
+        Examples
+        ---------
+        Usage ::
+            date = datetime.datetime.now()
+            for room in await client.fetch_rooms(date):
+                print(room.name)
+
+        Raises
+        ------
+        HTTPException
+            Getting the rooms failed.
+
+        ImproperApiResultException
+            Data retrieved from API are improper to parsing.
+
+        Return
+        -------
+        List[:class:`.Room`]
+            All available rooms.
+        """
+        endpoint = (
+            f"{API_URL}"
+            "/extranet/queries/free-rooms"
+            f"?date={date.strftime('%Y-%m-%d')}"
+        )
+        print(endpoint)
+
+        async with self.__session.get(endpoint) as response:
+            if isinstance((data := await response.json()), dict):
+                rooms = [
+                    Room(self, raw_data) for raw_data in data.get("rows", [])
+                ]
+                return rooms or []
 
             raise ImproperApiResultException()
