@@ -8,12 +8,14 @@ import aiohttp
 from ._constants import API_URL, BASE_URL
 from .absence import Absence
 from .error import ImproperApiResultException
+from .internship import Internship
 from .notification import Notification
 from .pave import Pave
 from .room import Room
 from .semester import Semester
 from .slide import Slide
 from .student import Document, User
+
 
 if typing.TYPE_CHECKING:
     from types import TracebackType
@@ -30,13 +32,16 @@ class Client:
     __notifications: list[Notification] | None = None
     __slides: list[Slide] | None = None
     __semesters: list[Semester] | None = None
+    __internships: list[Internship] | None = None
 
     # =========================================================================
 
     def __init__(
-            self, sid: str, loop: asyncio.AbstractEventLoop | None = None
+        self, sid: str, loop: asyncio.AbstractEventLoop | None = None
     ) -> None:
-        self.__loop: asyncio.AbstractEventLoop = loop or asyncio.get_event_loop()
+        self.__loop: asyncio.AbstractEventLoop = (
+            loop or asyncio.get_event_loop()
+        )
         self.__session = aiohttp.ClientSession(
             cookies={"myefrei.sid": sid}, loop=self.__loop
         )
@@ -54,7 +59,7 @@ class Client:
 
     async def __aexit__(
         self,
-        exc_type: typing.Type[BaseException] | None,
+        exc_type: type[BaseException] | None,
         exc_value: BaseException | None,
         traceback: typing.Optional["TracebackType"],
     ) -> None:
@@ -137,6 +142,12 @@ class Client:
             )
 
         return None
+
+    # =========================================================================
+
+    @property
+    def internships(self) -> list[Internship] | None:
+        return self.__internships
 
     # =========================================================================
     # =========================================================================
@@ -392,7 +403,6 @@ class Client:
             "/extranet/queries/free-rooms"
             f"?date={date.strftime('%Y-%m-%d')}"
         )
-        print(endpoint)
 
         async with self.__session.get(endpoint) as response:
             if isinstance((data := await response.json()), dict):
@@ -400,5 +410,41 @@ class Client:
                     Room(self, raw_data) for raw_data in data.get("rows", [])
                 ]
                 return rooms or []
+
+            raise ImproperApiResultException()
+
+    # =========================================================================
+
+    async def fetch_internships(self) -> list[Internship]:
+        """Retrieves an :term:`iterator` containing all internships.
+
+        Examples
+        ---------
+        Usage ::
+            for internship in await client.fetch_internships(date):
+                print(internship.subject)
+
+        Raises
+        ------
+        HTTPException
+            Getting the internships failed.
+
+        ImproperApiResultException
+            Data retrieved from API are improper to parsing.
+
+        Return
+        -------
+        List[:class:`.Internship`]
+            All internships.
+        """
+        endpoint = f"{API_URL}/extranet/student/queries/internships"
+
+        async with self.__session.get(endpoint) as response:
+            if isinstance((data := await response.json()), dict):
+                self.__internships = [
+                    Internship(self, raw_data)
+                    for raw_data in data.get("rows", [])
+                ]
+                return self.internships or []
 
             raise ImproperApiResultException()

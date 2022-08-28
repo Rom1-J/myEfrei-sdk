@@ -7,7 +7,9 @@ from myefrei_sdk.client import Client
 
 
 @pytest.mark.asyncio  # type: ignore[misc]
-async def test_client_pave_associations(event_loop: asyncio.BaseEventLoop) -> None:
+async def test_client_pave_associations(
+    event_loop: asyncio.BaseEventLoop,
+) -> None:
     client = Client(os.environ["SID"], loop=event_loop)
 
     await client.connect()
@@ -39,7 +41,9 @@ async def test_client_pave_roles(event_loop: asyncio.BaseEventLoop) -> None:
 
 
 @pytest.mark.asyncio  # type: ignore[misc]
-async def test_client_pave_interests(event_loop: asyncio.BaseEventLoop) -> None:
+async def test_client_pave_interests(
+    event_loop: asyncio.BaseEventLoop,
+) -> None:
     client = Client(os.environ["SID"], loop=event_loop)
 
     await client.connect()
@@ -66,4 +70,3 @@ async def test_client_pave_mines(event_loop: asyncio.BaseEventLoop) -> None:
     assert client.pave.mines == mines
 
     await client.disconnect()
-

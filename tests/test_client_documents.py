@@ -20,4 +20,3 @@ async def test_client_notification(event_loop: asyncio.BaseEventLoop) -> None:
     assert client.documents == documents
 
     await client.disconnect()
-

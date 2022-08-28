@@ -23,7 +23,9 @@ async def test_client_semesters(event_loop: asyncio.BaseEventLoop) -> None:
 
 
 @pytest.mark.asyncio  # type: ignore[misc]
-async def test_client_semester_absences(event_loop: asyncio.BaseEventLoop) -> None:
+async def test_client_semester_absences(
+    event_loop: asyncio.BaseEventLoop,
+) -> None:
     client = Client(os.environ["SID"], loop=event_loop)
 
     await client.connect()
