@@ -1,5 +1,7 @@
+import asyncio
 import datetime
 import logging
+import typing
 
 import aiohttp
 
@@ -13,6 +15,8 @@ from .semester import Semester
 from .slide import Slide
 from .student import Document, User
 
+if typing.TYPE_CHECKING:
+    from types import TracebackType
 
 _log = logging.getLogger(__name__)
 
@@ -29,13 +33,38 @@ class Client:
 
     # =========================================================================
 
-    def __init__(self) -> None:
-        self.__session: aiohttp.ClientSession = aiohttp.ClientSession()
+    def __init__(
+            self, sid: str, loop: asyncio.AbstractEventLoop | None = None
+    ) -> None:
+        self.__loop: asyncio.AbstractEventLoop = loop or asyncio.get_event_loop()
+        self.__session = aiohttp.ClientSession(
+            cookies={"myefrei.sid": sid}, loop=self.__loop
+        )
 
-    async def connect(self, sid: str, fetch_all: bool = False) -> None:
-        self.__session = aiohttp.ClientSession(cookies={"myefrei.sid": sid})
         self.__pave = Pave(self, self.__session)
 
+    # =========================================================================
+
+    async def __aenter__(self) -> "Client":
+        await self.connect()
+
+        return self
+
+    # =========================================================================
+
+    async def __aexit__(
+        self,
+        exc_type: typing.Type[BaseException] | None,
+        exc_value: BaseException | None,
+        traceback: typing.Optional["TracebackType"],
+    ) -> None:
+        if not self.__session.closed:
+            await self.disconnect()
+
+    # =========================================================================
+    # =========================================================================
+
+    async def connect(self, fetch_all: bool = False) -> None:
         async with self.__session.get(BASE_URL + "/user") as response:
             self.__user = User(self, await response.json())
 
@@ -49,6 +78,11 @@ class Client:
             await self.pave.fetch_roles()
             await self.pave.fetch_associations()
             await self.pave.fetch_mines()
+
+    # =========================================================================
+
+    async def disconnect(self) -> None:
+        await self.__session.close()
 
     # =========================================================================
     # =========================================================================

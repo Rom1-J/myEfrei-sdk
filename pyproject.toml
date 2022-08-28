@@ -30,6 +30,9 @@ line-length = 79
 target-version = ['py310']
 include = '\.pyi?$'
 
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
 [tool.isort]
 profile = "black"
 line_length = 79
