@@ -5,7 +5,7 @@ import pytest
 from myefrei_sdk.client import Client
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio  # type: ignore[misc]
 async def test_client_pave_associations() -> None:
     client = Client()
 
@@ -19,7 +19,7 @@ async def test_client_pave_associations() -> None:
     assert client.pave.associations == associations
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio  # type: ignore[misc]
 async def test_client_pave_roles() -> None:
     client = Client()
 
@@ -33,7 +33,7 @@ async def test_client_pave_roles() -> None:
     assert client.pave.roles == roles
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio  # type: ignore[misc]
 async def test_client_pave_interests() -> None:
     client = Client()
 
@@ -47,7 +47,7 @@ async def test_client_pave_interests() -> None:
     assert client.pave.interests == interests
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio  # type: ignore[misc]
 async def test_client_pave_mines() -> None:
     client = Client()
 

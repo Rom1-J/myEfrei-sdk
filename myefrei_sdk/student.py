@@ -39,11 +39,11 @@ class User:
         return (
             "<User "
             "sub=%d, "
-            "firstname=%s, "
-            "lastname=%s, "
-            "email=%s, "
+            "firstname='%s', "
+            "lastname='%s', "
+            "email='%s', "
             "is_email_verified=%s, "
-            "role=%s,"
+            "role='%s',"
             "authorities=%s>"
             % (
                 self.sub,
@@ -85,9 +85,9 @@ class Document:
         return (
             "<Document "
             "id=%d, "
-            "title=%s, "
-            "type_name=%s, "
-            "mimetype=%s, "
+            "title='%s', "
+            "type_name='%s', "
+            "mimetype='%s', "
             "size=%d, "
             "page_last_updated=%s>"
             % (

@@ -5,7 +5,7 @@ import pytest
 from myefrei_sdk.client import Client
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio  # type: ignore[misc]
 async def test_client_slides() -> None:
     client = Client()
 
@@ -19,7 +19,7 @@ async def test_client_slides() -> None:
     assert client.slides == slides
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio  # type: ignore[misc]
 async def test_client_slide() -> None:
     client = Client()
 

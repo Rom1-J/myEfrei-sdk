@@ -35,10 +35,6 @@ profile = "black"
 line_length = 79
 lines_after_imports = 2
 
-[[tool.mypy.overrides]]
-module = "types.course"
-implicit_reexport = true
-
 [tool.pylint.BASIC]
 good-names=[
     "e",  # (exception) as e

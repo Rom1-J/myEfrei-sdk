@@ -28,7 +28,7 @@ repos:
     rev: 'tags/v0.971'
     hooks:
       - id: mypy
-        args: [ "--strict", "--namespace-packages", "--ignore-missing-imports", "--show-error-codes" ]
+        args: [ "--strict", "--namespace-packages", "--ignore-missing-imports", "--show-error-codes"]
 
   - repo: https://github.com/PyCQA/flake8
     rev: 4.0.1

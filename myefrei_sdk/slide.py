@@ -32,9 +32,9 @@ class Slide:
     def __repr__(self) -> str:
         return (
             "<Slide "
-            "token=%s, "
-            "author=%s, "
-            "title=%s>"
+            "token='%s', "
+            "author='%s', "
+            "title='%s'>"
             % (
                 self.token,
                 self.author,

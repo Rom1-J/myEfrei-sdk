@@ -29,9 +29,9 @@ class Notification:
     def __repr__(self) -> str:
         return (
             "<Notification "
-            "title=%s, "
-            "short_description=%s, "
-            "priority=%s>"
+            "title='%s', "
+            "short_description='%s', "
+            "priority='%s'>"
             % (
                 self.title,
                 self.short_description,

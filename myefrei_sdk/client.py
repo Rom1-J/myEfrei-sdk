@@ -91,6 +91,17 @@ class Client:
     def semesters(self) -> list[Semester] | None:
         return self.__semesters
 
+    def get_semester(self, name: str) -> Semester | None:
+        if self.semesters:
+            return next(
+                filter(
+                    lambda s: s.name.lower() == name.lower(), self.semesters
+                ),
+                None,
+            )
+
+        return None
+
     # =========================================================================
     # =========================================================================
 
@@ -308,7 +319,7 @@ class Client:
         async with self.__session.get(endpoint) as response:
             if isinstance((data := await response.json()), dict):
                 self.__semesters = [
-                    await Semester(self, raw_data).complete()
+                    await Semester(self, self.__session, raw_data).complete()
                     for raw_data in data.get("rows", [])
                 ]
                 return self.semesters or []

@@ -7,19 +7,21 @@ from ._constants import API_URL
 from .error import ImproperApiResultException
 from .semester import Semester
 
+
 if typing.TYPE_CHECKING:
     from .client import Client
+    from .types.pave import ROLE, TIME
     from .types.pave import Association as AssociationPayload
-    from .types.pave import Role as RolePayload
     from .types.pave import Interest as InterestPayload
     from .types.pave import Pave as StudentPavePayload
-    from .types.pave import ROLE, TIME
+    from .types.pave import Role as RolePayload
 
 _log = logging.getLogger(__name__)
 
 
 class PaveAssociation:
     def __init__(self, client: "Client", data: "AssociationPayload") -> None:
+        # pylint: disable=unused-private-member
         self.__client: "Client" = client
 
         self.id: int = int(data["id"])
@@ -34,6 +36,7 @@ class PaveAssociation:
 
 class PaveRole:
     def __init__(self, client: "Client", data: "RolePayload") -> None:
+        # pylint: disable=unused-private-member
         self.__client: "Client" = client
 
         self.id: int = int(data["id"])
@@ -48,6 +51,7 @@ class PaveRole:
 
 class PaveInterest:
     def __init__(self, client: "Client", data: "InterestPayload") -> None:
+        # pylint: disable=unused-private-member
         self.__client: "Client" = client
 
         self.id: int = int(data["id"])
@@ -65,8 +69,8 @@ class PaveStudent:
         self.__client: "Client" = client
 
         self.id: int = data["id"]
-        self.association: PaveAssociation | None = self.__client.pave.get_association(
-            data["associationId"]
+        self.association: PaveAssociation | None = (
+            self.__client.pave.get_association(data["associationId"])
         )
 
         self.role: PaveRole | None = self.__client.pave.get_role(
@@ -86,17 +90,20 @@ class PaveStudent:
         self.public_comment: str | None = data.get("publicComment")
 
     def __repr__(self) -> str:
-        return "<PaveStudent id=%d, " \
-               "association=%s, " \
-               "role=%s, " \
-               "invested=%s," \
-               "mark=%d >" % (
-                   self.id,
-                   repr(self.association),
-                   repr(self.role),
-                   repr(self.invested),
-                   self.mark,
-               )
+        return (
+            "<PaveStudent id=%d, "
+            "association=%s, "
+            "role=%s, "
+            "invested=%s,"
+            "mark=%d >"
+            % (
+                self.id,
+                repr(self.association),
+                repr(self.role),
+                repr(self.invested),
+                self.mark,
+            )
+        )
 
     def __str__(self) -> str:
         return f"{self.role} ({self.association}) {self.mark}"
@@ -111,7 +118,7 @@ class Pave:
     # =========================================================================
 
     def __init__(
-            self, client: "Client", session: aiohttp.ClientSession
+        self, client: "Client", session: aiohttp.ClientSession
     ) -> None:
         self.__client: "Client" = client
         self.__session: aiohttp.ClientSession = session
@@ -126,8 +133,7 @@ class Pave:
     def get_association(self, q: int | str) -> PaveAssociation | None:
         if self.associations:
             return next(
-                filter(lambda a: q in (a.id, a.name), self.associations),
-                None
+                filter(lambda a: q in (a.id, a.name), self.associations), None
             )
 
         return None
@@ -141,8 +147,7 @@ class Pave:
     def get_role(self, q: typing.Union[int, "ROLE"]) -> PaveRole | None:
         if self.roles:
             return next(
-                filter(lambda r: q in (r.id, r.name), self.roles),
-                None
+                filter(lambda r: q in (r.id, r.name), self.roles), None
             )
 
         return None
@@ -153,11 +158,12 @@ class Pave:
     def interests(self) -> list[PaveInterest] | None:
         return self.__interests
 
-    def get_interest(self, q: typing.Union[int, "TIME"]) -> PaveInterest | None:
+    def get_interest(
+        self, q: typing.Union[int, "TIME"]
+    ) -> PaveInterest | None:
         if self.interests:
             return next(
-                filter(lambda i: q in (i.id, i.time), self.interests),
-                None
+                filter(lambda i: q in (i.id, i.time), self.interests), None
             )
 
         return None
@@ -194,8 +200,7 @@ class Pave:
             All PAVE associations.
         """
         endpoint = (
-            f"{API_URL}"
-            "/extranet/student/queries/paves/pave-associations"
+            f"{API_URL}" "/extranet/student/queries/paves/pave-associations"
         )
 
         async with self.__session.get(endpoint) as response:
@@ -232,10 +237,7 @@ class Pave:
         List[:class:`.PaveRole`]
             All PAVE roles.
         """
-        endpoint = (
-            f"{API_URL}"
-            "/extranet/student/queries/paves/pave-roles"
-        )
+        endpoint = f"{API_URL}" "/extranet/student/queries/paves/pave-roles"
 
         async with self.__session.get(endpoint) as response:
             if isinstance((data := await response.json()), dict):
@@ -272,8 +274,7 @@ class Pave:
             All PAVE interests.
         """
         endpoint = (
-            f"{API_URL}"
-            "/extranet/student/queries/paves/pave-invested-times"
+            f"{API_URL}" "/extranet/student/queries/paves/pave-invested-times"
         )
 
         async with self.__session.get(endpoint) as response:
@@ -289,7 +290,7 @@ class Pave:
     # =========================================================================
 
     async def fetch_mines(
-            self, semester: Semester | None = None
+        self, semester: Semester | None = None
     ) -> list[PaveStudent]:
         """Retrieves an :term:`iterator` containing PAVE done in given
         semester.
@@ -330,7 +331,9 @@ class Pave:
 
                 raise ImproperApiResultException()
 
-        for s in (self.__client.semesters or await self.__client.fetch_semesters()):
+        for s in (
+            self.__client.semesters or await self.__client.fetch_semesters()
+        ):
             mines: list[PaveStudent] = []
 
             endpoint = (

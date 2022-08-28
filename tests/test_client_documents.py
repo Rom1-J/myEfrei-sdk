@@ -5,7 +5,7 @@ import pytest
 from myefrei_sdk.client import Client
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio  # type: ignore[misc]
 async def test_client_notification() -> None:
     client = Client()
 
