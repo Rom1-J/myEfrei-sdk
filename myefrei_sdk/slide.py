@@ -2,8 +2,6 @@ import datetime
 import logging
 import typing
 
-import typing_extensions
-
 
 if typing.TYPE_CHECKING:
     from .client import Client
@@ -49,5 +47,5 @@ class Slide:
 
     # =========================================================================
 
-    async def complete(self) -> typing_extensions.Self:
+    async def complete(self) -> "Slide":
         return await self.__client.fetch_slide(self.token)

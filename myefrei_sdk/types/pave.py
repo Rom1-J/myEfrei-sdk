@@ -27,32 +27,31 @@ TIME = typing.Literal[
 
 
 class Association(typing.TypedDict):
-    id: int
+    id: str
     name: str
 
 
 class Role(typing.TypedDict):
-    id: int
+    id: str
     name: ROLE
 
 
 class Interest(typing.TypedDict):
-    id: int
+    id: str
     time: TIME
 
 
 class Pave(typing.TypedDict):
     id: int
-    association: Association
-
-    role: Role
-    other_role: str | None
-
-    invested: Interest
-
+    associationId: int
+    associationName: str
+    roleId: int
+    roleName: ROLE
+    otherRole: str
+    investedTime: TIME
     mission: str
-    acquired_skills: str
+    acquiredSkills: str
     motivation: str
-
     mark: int
-    public_comment: str | None
+    publicComment: str | None
+    pavePeriodId: int

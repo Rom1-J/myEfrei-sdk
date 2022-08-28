@@ -5,6 +5,7 @@ import typing
 
 if typing.TYPE_CHECKING:
     from .client import Client
+    from .semester import Semester
     from .types.absence import Absence as AbsencePayload
 
 _log = logging.getLogger(__name__)
@@ -52,7 +53,7 @@ class Absence:
         )
 
     def __str__(self) -> str:
-        return "%s (%d)" % (str(self.course), str(self.excused))
+        return f"{str(self.course)} ({self.excused})"
 
     # =========================================================================
     # =========================================================================
