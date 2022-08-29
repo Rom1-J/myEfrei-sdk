@@ -35,7 +35,7 @@ class Internship:
             "firm='%s', "
             "start=%s, "
             "end=%s, "
-            "subject=%s, "
+            "subject='%s', "
             "state='%s'>"
             % (
                 self.firm,

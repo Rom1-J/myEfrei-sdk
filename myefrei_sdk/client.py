@@ -7,6 +7,7 @@ import aiohttp
 
 from ._constants import API_URL, BASE_URL
 from .absence import Absence
+from .course import Course
 from .error import ImproperApiResultException
 from .internship import Internship
 from .notification import Notification
@@ -23,6 +24,7 @@ if typing.TYPE_CHECKING:
 _log = logging.getLogger(__name__)
 
 
+# pylint: disable=too-many-public-methods
 class Client:
     __user: User | None = None
     __pave: Pave
@@ -33,6 +35,7 @@ class Client:
     __slides: list[Slide] | None = None
     __semesters: list[Semester] | None = None
     __internships: list[Internship] | None = None
+    __courses: list[Course] | None = None
 
     # =========================================================================
 
@@ -138,6 +141,21 @@ class Client:
                 filter(
                     lambda s: s.name.lower() == name.lower(), self.semesters
                 ),
+                None,
+            )
+
+        return None
+
+    # =========================================================================
+
+    @property
+    def courses(self) -> list[Course] | None:
+        return self.__courses
+
+    def get_course(self, q: str) -> Course | None:
+        if self.courses:
+            return next(
+                filter(lambda c: q in (c.code, c.name), self.courses),
                 None,
             )
 
@@ -446,5 +464,50 @@ class Client:
                     for raw_data in data.get("rows", [])
                 ]
                 return self.internships or []
+
+            raise ImproperApiResultException()
+
+    # =========================================================================
+
+    async def fetch_courses(self, semester: Semester) -> list[Course]:
+        """Retrieves an :term:`iterator` containing all courses.
+
+        Examples
+        ---------
+        Usage ::
+            semester = client.get_semester("S6")
+            for course in await client.fetch_courses(semester):
+                print(course.name)
+
+        Raises
+        ------
+        HTTPException
+            Getting the courses failed.
+
+        ImproperApiResultException
+            Data retrieved from API are improper to parsing.
+
+        Return
+        -------
+        List[:class:`.Internship`]
+            All courses for given semester.
+        """
+        endpoint = (
+            f"{API_URL}"
+            f"/extranet/student/queries/student-moodle-courses"
+            f"?semester={semester.name}"
+            f"&year={semester.year_gap}"
+        )
+
+        async with self.__session.get(endpoint) as response:
+            if isinstance((data := await response.json()), dict):
+                self.__courses = [
+                    Course(self, raw_data)
+                    for raw_data in filter(
+                        lambda c: c["soffServiceGrpId"] == "MODULE",
+                        data.get("rows", []),
+                    )
+                ]
+                return self.courses or []
 
             raise ImproperApiResultException()

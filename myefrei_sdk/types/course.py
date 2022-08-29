@@ -3,10 +3,23 @@ import typing
 
 
 if typing.TYPE_CHECKING:
-    from .exam_paper import ExamPaper
-    from .grade import Grade
-    from .semester import Semester
     from .teacher import Teacher
+
+
+SERVICE_GROUP_ID = typing.Literal[
+    "RATTRAPAGE",
+    "UE",
+    "EXAMEN",
+    "FFPNONNOTE",
+    "FFPNOTE",
+    "MODULE",
+    "NOTESEULE",
+]
+
+
+class ModuleIdentifier(typing.TypedDict):
+    computeId: str
+    nameModule: str
 
 
 class ScheduledCourse(typing.TypedDict):
@@ -26,14 +39,19 @@ class ScheduledCourse(typing.TypedDict):
 
 
 class Course(typing.TypedDict):
-    id: str
-
-    teacher: list["Teacher"]
-    semester: "Semester"
-
-    code: str
-    name: str
-
-    scheduled: list["ScheduledCourse"]
-    grades: list["Grade"]
-    exam_papers: list["ExamPaper"]
+    level1Name: str
+    level2Name: str
+    level3Name: str
+    custAggregateName: str
+    custSemester: str
+    enrServiceId: str
+    enrServiceoffId: str
+    coursesSpace: str
+    soffAcadPerId: str
+    soffDeliveryMode: str
+    soffOfferingDesc: str
+    soffServiceGrpId: SERVICE_GROUP_ID
+    soffServiceoffPk: str
+    soffliParentServoffFk: str
+    stdNumber: str
+    custMoodleIdentifier: list[ModuleIdentifier]
