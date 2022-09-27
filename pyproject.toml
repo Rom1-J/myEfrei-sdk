@@ -6,7 +6,7 @@ authors = ["Romain J. <romain@gnous.eu>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-aiohttp = "^3.8.1"
+aiohttp = "^3.8.3"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.20.0"
